@@ -1,0 +1,15 @@
+[[bin]]
+name = "RuntDeale"
+path = "./src/main.rs"
+
+[package]
+authors = ["Calin Z. Baenen"]
+edition = "2018"
+version = "0.1.1"
+name = "RuntDeale"
+
+[dependencies]
+pistoncore-glutin_window = "0.69.0"
+piston2d-opengl_graphics = "0.79.0"
+piston2d-graphics = "0.41.0"
+piston = "0.53.0"
