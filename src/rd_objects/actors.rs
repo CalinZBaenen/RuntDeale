@@ -117,31 +117,6 @@ impl EntityDescriptor for Entity {
     }
 }
 
-impl Positioned for Entity {
-    //
-}
-
-impl Collision for Entity {
-    //
-}
-
-impl Girthy for Entity {
-    fn getDimensions(&self) -> (Scalar, Scalar) {
-        //
-    }
-
-    fn resize(&mut self, dx: Scalar, dy: Scalar) -> (Scalar, Scalar) {
-        //
-    }
-
-    fn setH(&mut self, h: Scalar) {
-        //
-    }
-    fn setW(&mut self, w: Scalar) {
-        //
-    }
-}
-
 impl Actor for Entity {
     fn setVelocityX(&mut self, v: Scalar) {
         self.velocityX = v;
