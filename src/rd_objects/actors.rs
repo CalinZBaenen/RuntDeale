@@ -9,10 +9,10 @@ use super::position::{Girthy, Positioned};
 */
 pub trait Collision: Positioned + Girthy {
     fn overlapping(&mut self, other: &mut Self) -> bool {
-        let opos = other.getPosition();
-        let spos = self.getPosition();
-        let osz = self.getDimensions();
-        let ssz = self.getDimensions();
+        let opos = other.get_position();
+        let spos = self.get_position();
+        let osz = self.get_dimensions();
+        let ssz = self.get_dimensions();
         true
         //if {}
         //if {}
@@ -25,12 +25,12 @@ pub trait Collision: Positioned + Girthy {
   Describes an entity.
 */
 pub trait EntityDescriptor: Collision {
-    fn hasCollision(&self) -> bool;
-    fn setCollision(&mut self, f: bool);
+    fn has_collision(&self) -> bool;
+    fn set_collision(&mut self, f: bool);
 
     fn damage(&mut self, amt: i32) -> i32;
-    fn getHP(&self) -> i32;
-    fn setHP(&mut self, amt: i32);
+    fn get_hp(&self) -> i32;
+    fn set_hp(&mut self, amt: i32);
 }
 
 /**
@@ -40,9 +40,9 @@ pub trait EntityDescriptor: Collision {
   changing velocity, and (probably) more.
 */
 pub trait Actor: Positioned {
-    fn setVelocityX(&mut self, v: Scalar);
-    fn setVelocityY(&mut self, v: Scalar);
-    fn setVelocity_by(&mut self, vx: Scalar, vy: Scalar);
+    fn set_velocity_x(&mut self, v: Scalar);
+    fn set_velocity_y(&mut self, v: Scalar);
+    fn set_velocity_by(&mut self, vx: Scalar, vy: Scalar);
 }
 
 /**
@@ -50,10 +50,10 @@ pub trait Actor: Positioned {
   inventory, or other state.
 */
 pub struct Entity {
-    pub velocityX: Scalar,
-    pub velocityY: Scalar,
-    pub isGhost: bool,
-    pub maxHp: i32,
+    pub velocity_x: Scalar,
+    pub velocity_y: Scalar,
+    pub is_ghost: bool,
+    pub max_hp: i32,
     pub name: Option<String>,
     pub hp: i32,
     pub w: Scalar,
@@ -65,10 +65,10 @@ pub struct Entity {
 impl Entity {
     pub fn create(name: String, x: Scalar, y: Scalar, w: Scalar, h: Scalar) -> Self {
         Self {
-            velocityX: 0.,
-            velocityY: 0.,
-            isGhost: true,
-            maxHp: 0,
+            velocity_x: 0.,
+            velocity_y: 0.,
+            is_ghost: true,
+            max_hp: 0,
             name: Option::Some(name),
             hp: 0,
             x,
@@ -80,10 +80,10 @@ impl Entity {
 
     pub fn new() -> Self {
         Self {
-            velocityX: 0.,
-            velocityY: 0.,
-            isGhost: true,
-            maxHp: 0,
+            velocity_x: 0.,
+            velocity_y: 0.,
+            is_ghost: true,
+            max_hp: 0,
             name: Option::None,
             hp: 0,
             x: 0.,
@@ -98,3 +98,5 @@ impl_generic_traits!(Positioned for Entity);
 impl_generic_traits!(Girthy for Entity);
 impl_generic_traits!(EntityDescriptor for Entity);
 impl_generic_traits!(Actor for Entity);
+
+impl Collision for Entity {}

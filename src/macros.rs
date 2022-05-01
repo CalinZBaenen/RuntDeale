@@ -1,7 +1,7 @@
 macro_rules! impl_generic_traits {
     (Girthy for $x:ident) => {
         impl Girthy for $x {
-            fn getDimensions(&self) -> (Scalar, Scalar) {
+            fn get_dimensions(&self) -> (Scalar, Scalar) {
                 (self.w, self.h)
             }
 
@@ -18,16 +18,16 @@ macro_rules! impl_generic_traits {
     };
     (Positioned for $x:ident) => {
         impl Positioned for $x {
-            fn shiftPosition(&mut self, dx: Scalar, dy: Scalar) {
+            fn shift_position(&mut self, dx: Scalar, dy: Scalar) {
                 self.x += dx;
                 self.y += dy;
             }
 
-            fn getPosition(&self) -> (Scalar, Scalar) {
+            fn get_position(&self) -> (Scalar, Scalar) {
                 (self.x, self.y)
             }
 
-            fn setPosition(&mut self, x: Scalar, y: Scalar) {
+            fn set_position(&mut self, x: Scalar, y: Scalar) {
                 self.x = x;
                 self.y = y;
             }
@@ -35,38 +35,38 @@ macro_rules! impl_generic_traits {
     };
     (EntityDescriptor for $x:ident) => {
         impl EntityDescriptor for $x {
-            fn hasCollision(&self) -> bool {
-                self.isGhost
+            fn has_collision(&self) -> bool {
+                self.is_ghost
             }
-            fn setCollision(&mut self, f: bool) {
-                self.isGhost = f;
+            fn set_collision(&mut self, f: bool) {
+                self.is_ghost = f;
             }
 
             fn damage(&mut self, amt: i32) -> i32 {
                 self.hp -= amt;
                 self.hp
             }
-            fn getHP(&self) -> i32 {
+            fn get_hp(&self) -> i32 {
                 self.hp
             }
-            fn setHP(&mut self, amt: i32) {
+            fn set_hp(&mut self, amt: i32) {
                 self.hp = amt;
             }
         }
     };
     (Actor for $x:ident) => {
         impl Actor for $x {
-            fn setVelocityX(&mut self, v: Scalar) {
-                self.velocityX = v;
+            fn set_velocity_x(&mut self, v: Scalar) {
+                self.velocity_x = v;
             }
 
-            fn setVelocityY(&mut self, v: Scalar) {
-                self.velocityY = v;
+            fn set_velocity_y(&mut self, v: Scalar) {
+                self.velocity_y = v;
             }
 
-            fn setVelocity_by(&mut self, vx: Scalar, vy: Scalar) {
-                self.velocityX = vx;
-                self.velocityY = vy;
+            fn set_velocity_by(&mut self, vx: Scalar, vy: Scalar) {
+                self.velocity_x = vx;
+                self.velocity_y = vy;
             }
         }
     };
