@@ -54,4 +54,20 @@ macro_rules! impl_generic_traits {
             }
         }
     };
+    (Actor for $x:ident) => {
+        impl Actor for $x {
+            fn setVelocityX(&mut self, v: Scalar) {
+                self.velocityX = v;
+            }
+
+            fn setVelocityY(&mut self, v: Scalar) {
+                self.velocityY = v;
+            }
+
+            fn setVelocity_by(&mut self, vx: Scalar, vy: Scalar) {
+                self.velocityX = vx;
+                self.velocityY = vy;
+            }
+        }
+    };
 }
