@@ -16,7 +16,7 @@ macro_rules! impl_generic_traits {
             }
         }
     };
-    (Position for $x:ident) => {
+    (Positioned for $x:ident) => {
         impl Positioned for Entity {
             fn shiftPosition(&mut self, dx: Scalar, dy: Scalar) {
                 self.x += dx;
