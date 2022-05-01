@@ -11,14 +11,11 @@ use graphics::{
     math::Matrix2d,
     math::Scalar,
     rectangle::Rectangle,
-    types::Color,
-    types::Radius,
     Graphics,
-    ImageSize,
 };
-use opengl_graphics::{GlGraphics, Texture, TextureSettings};
+use opengl_graphics::{Texture, TextureSettings};
 
-use super::position::{Girthy, Positioned};
+use super::position::Positioned;
 
 /**
   Represents the rendering information
