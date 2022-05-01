@@ -1,4 +1,5 @@
 mod app;
+#[macro_use]
 mod macros;
 mod rd_events;
 mod rd_objects;
