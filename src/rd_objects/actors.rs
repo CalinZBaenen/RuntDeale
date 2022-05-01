@@ -1,6 +1,6 @@
 use std::option::Option;
 
-use graphics::{math::Scalar, Graphics};
+use graphics::math::Scalar;
 
 use super::position::{Girthy, Positioned};
 
@@ -94,40 +94,7 @@ impl Entity {
     }
 }
 
-/**
-  Implement the functions needed to describe an entity.
-*/
-impl EntityDescriptor for Entity {
-    fn hasCollision(&self) -> bool {
-        self.isGhost
-    }
-    fn setCollision(&mut self, f: bool) {
-        self.isGhost = f;
-    }
-
-    fn damage(&mut self, amt: i32) -> i32 {
-        self.hp -= amt;
-        self.hp
-    }
-    fn getHP(&self) -> i32 {
-        self.hp
-    }
-    fn setHP(&mut self, amt: i32) {
-        self.hp = amt;
-    }
-}
-
-impl Actor for Entity {
-    fn setVelocityX(&mut self, v: Scalar) {
-        self.velocityX = v;
-    }
-
-    fn setVelocityY(&mut self, v: Scalar) {
-        self.velocityY = v;
-    }
-
-    fn setVelocity(&mut self, vx: Scalar, vy: Scalar) {
-        self.velocityX = vx;
-        self.velocityX = vy;
-    }
-}
+impl_generic_traits!(Positioned for Entity);
+impl_generic_traits!(Girthy for Entity);
+impl_generic_traits!(EntityDescriptor for Entity);
+impl_generic_traits!(Actor for Entity);
