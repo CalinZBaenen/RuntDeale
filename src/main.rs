@@ -20,7 +20,7 @@ fn main() {
         .build()
         .unwrap();
     let mut app = App {
-        player: Entity::create(String::from("Frisk")),
+        player: Entity::create(String::from("Frisk"), 1.0, 1.0, 1.0, 1.0),
         gl: GlGraphics::new(opengl_ver),
     };
     let mut events = Events::new(EventSettings::new());
