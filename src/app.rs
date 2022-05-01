@@ -2,15 +2,13 @@ use std::option::Option;
 use Option::Some;
 
 use glutin_window::GlutinWindow as Window;
-use graphics::math::Scalar;
 use opengl_graphics::GlGraphics;
 use piston::event_loop::Events;
 use piston::input::{RenderArgs, UpdateArgs};
 use piston::{Event, Input};
 
 use crate::rd_events;
-use crate::rd_objects::{actors, sprites};
-use crate::rd_utils::colors;
+use crate::rd_objects::actors;
 
 /**
 * "Main class".
