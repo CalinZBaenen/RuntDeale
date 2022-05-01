@@ -1,6 +1,3 @@
-[[bin]]
-name = "RuntDeale"
-
 [package]
 name = "runedeale"
 authors = ["Calin Z. Baenen"]
