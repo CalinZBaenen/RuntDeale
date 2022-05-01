@@ -42,7 +42,7 @@ pub trait EntityDescriptor: Collision {
 pub trait Actor: Positioned {
     fn setVelocityX(&mut self, v: Scalar);
     fn setVelocityY(&mut self, v: Scalar);
-    fn setVelocity(&mut self, vx: Scalar, vy: Scalar);
+    fn setVelocity_by(&mut self, vx: Scalar, vy: Scalar);
 }
 
 /**
