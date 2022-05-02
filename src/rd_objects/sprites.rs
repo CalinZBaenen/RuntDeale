@@ -30,7 +30,7 @@ pub enum RenderInfo {
 impl RenderInfo {
     fn new_image(p: &Path) -> Self {
         let img = Image::new();
-        let tex: Texture;
+        let mut tex = None;
 
         match Texture::from_path(p, &TextureSettings::new()) {
             Result::Err(msg) => {
@@ -46,11 +46,11 @@ impl RenderInfo {
             }
 
             Result::Ok(img) => {
-                tex = img;
+                tex = Some(img);
             }
         }
 
-        RenderInfo::Image(img, tex)
+        RenderInfo::Image(img, tex.unwrap())
     }
 }
 
@@ -110,4 +110,18 @@ impl<T: Graphics<Texture = Texture>> SpriteDescriptor for Sprite<'_, T> {
     }
 }
 
-impl<T: Graphics<Texture = Texture>> Positioned for Sprite<'_, T> {}
+impl<T: Graphics<Texture = Texture>> Positioned for Sprite<'_, T> {
+    fn shift_position(&mut self, dx: Scalar, dy: Scalar) {
+        self.x += dx;
+        self.y += dy;
+    }
+
+    fn get_position(&self) -> (Scalar, Scalar) {
+        (self.x, self.y)
+    }
+
+    fn set_position(&mut self, x: Scalar, y: Scalar) {
+        self.x = x;
+        self.y = y;
+    }
+}
