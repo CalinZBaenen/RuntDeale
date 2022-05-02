@@ -67,8 +67,8 @@ pub trait SpriteDescriptor: Positioned {
   objects around easier.
 */
 pub struct Sprite<'a, T: Graphics> {
-    gfxBackend: &'a mut T,
-    pub drawState: DrawState,
+    gfx_backend: &'a mut T,
+    pub draw_state: DrawState,
     pub portrait: RenderInfo,
     pub x: Scalar,
     pub y: Scalar,
@@ -83,8 +83,8 @@ impl<'a, T: Graphics> Sprite<'a, T> {
             y: 0.,
             w: 0.,
             h: 0.,
-            gfxBackend: gbe,
-            drawState: DrawState::default(),
+            gfx_backend: gbe,
+            draw_state: DrawState::default(),
             portrait: RenderInfo::None,
         }
     }
@@ -96,13 +96,13 @@ impl<T: Graphics<Texture = Texture>> SpriteDescriptor for Sprite<'_, T> {
             RenderInfo::Rectangle(rect) => {
                 rect.draw(
                     [self.x, self.y, self.w, self.h],
-                    &self.drawState,
+                    &self.draw_state,
                     tf,
-                    self.gfxBackend,
+                    self.gfx_backend,
                 );
             }
             RenderInfo::Image(img, tex) => {
-                img.draw(tex, &self.drawState, tf, self.gfxBackend);
+                img.draw(tex, &self.draw_state, tf, self.gfx_backend);
             }
 
             _ => {}
