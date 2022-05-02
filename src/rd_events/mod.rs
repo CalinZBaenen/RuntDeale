@@ -1,2 +1,2 @@
-pub mod gameloop;
 pub mod buttons;
+pub mod gameloop;
