@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use graphics::types::{Color, ColorComponent};
 
 pub const RED: Color = [1.0, 0.0, 0.0, 1.0];
