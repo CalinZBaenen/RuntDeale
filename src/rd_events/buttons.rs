@@ -8,21 +8,21 @@ use crate::App;
 pub fn handle_button(app: &mut App, args: &ButtonArgs) {
     match args.button {
         Controller(b) => {
-            handle_ctrlrBtn(app, b);
+            handle_ctrlr_btn(app, b);
         }
         Keyboard(k) => {
-            handle_kbKey(app, k);
+            handle_kb_key(app, k);
         }
 
         _ => {}
     }
 }
 
-pub fn handle_ctrlrBtn(_app: &mut App, _b: ControllerButton) {
+pub fn handle_ctrlr_btn(_app: &mut App, _b: ControllerButton) {
     // Implement controller controls here, maybe.
 }
 
-pub fn handle_kbKey(app: &mut App, k: Key) {
+pub fn handle_kb_key(app: &mut App, k: Key) {
     match k {
         Key::A => { /* KEY 'A' EVENT. */ }
         Key::D => { /* KEY 'D' EVENT. */ }
