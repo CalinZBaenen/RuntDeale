@@ -1,0 +1,16 @@
+[[bin]]
+name = "runtdeale"
+
+[package]
+edition = "2021"
+version = "0.1.1"
+name = "runtdeale"
+
+[profile.dev]
+opt-level = 2
+
+[profile.release]
+opt-level = 2
+
+[dependencies]
+bevy = "^0.12"
