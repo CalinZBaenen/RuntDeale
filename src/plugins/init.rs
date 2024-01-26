@@ -20,6 +20,10 @@ pub(crate) struct InitGamePlugin;
 
 impl Plugin for InitGamePlugin {
 	fn build(&self, app:&mut App) {
+		app.init_resource::<sysres::BattleSS>();
+		app.init_resource::<sysres::PlayerSS>();
+		app.init_resource::<sysres::Tilesets>();
+		
 		app.add_systems(Startup, (sysres::texture::load_essential_game_textures, sysres::draw::draw_player));
 		
 		app.add_state::<Gamestate>();
