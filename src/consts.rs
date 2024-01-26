@@ -12,6 +12,7 @@ pub mod program {
 
 
 
+/// The paths to different textures.
 pub(crate) mod texpath {
 	pub const TS_RAINVILLE:&'static str = "textures/tiles/rainville.png";
 	
