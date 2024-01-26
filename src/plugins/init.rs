@@ -6,9 +6,8 @@ use bevy::window::{
 	MonitorSelection, WindowPosition,
 	WindowPlugin, Window
 };
-use bevy::app::{PluginGroup, Update, Startup, Plugin, App};
-use bevy::ecs::schedule::IntoSystemConfigs;
-use bevy::ecs::schedule::States;
+use bevy::ecs::schedule::{IntoSystemConfigs, States, apply_deferred};
+use bevy::app::{PluginGroup, Startup, Plugin, App};
 use bevy::DefaultPlugins;
 
 use std::fmt;
@@ -22,11 +21,11 @@ pub(crate) struct InitGamePlugin;
 impl Plugin for InitGamePlugin {
 	fn build(&self, app:&mut App) {
 		app.init_resource::<sysres::BattleSS>();
-		app.init_resource::<sysres::PlayerSS>();
 		app.init_resource::<sysres::Tilesets>();
 		
 		app.add_systems(Startup, (
 			sysres::texture::load_essential_game_textures,
+			apply_deferred,
 			sysres::texture::spawn_camera,
 			sysres::draw::draw_player
 		).chain());

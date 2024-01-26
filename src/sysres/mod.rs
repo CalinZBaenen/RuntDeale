@@ -16,7 +16,7 @@ pub(crate) struct BattleSS(pub(crate) HashMap<&'static str, Handle<TextureAtlas>
 
 
 
-#[derive(PartialEq, Resource, Default, Clone, Debug, Eq)]
+#[derive(PartialEq, Resource, Clone, Debug, Eq)]
 pub(crate) struct PlayerSS(pub(crate) Handle<TextureAtlas>);
 
 
