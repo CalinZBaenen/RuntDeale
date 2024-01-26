@@ -7,6 +7,7 @@ use bevy::window::{
 	WindowPlugin, Window
 };
 use bevy::app::{PluginGroup, Update, Startup, Plugin, App};
+use bevy::ecs::schedule::IntoSystemConfigs;
 use bevy::ecs::schedule::States;
 use bevy::DefaultPlugins;
 
@@ -24,7 +25,11 @@ impl Plugin for InitGamePlugin {
 		app.init_resource::<sysres::PlayerSS>();
 		app.init_resource::<sysres::Tilesets>();
 		
-		app.add_systems(Startup, (sysres::texture::load_essential_game_textures, sysres::draw::draw_player));
+		app.add_systems(Startup, (
+			sysres::texture::load_essential_game_textures,
+			sysres::texture::spawn_camera,
+			sysres::draw::draw_player
+		).chain());
 		
 		app.add_state::<Gamestate>();
 		

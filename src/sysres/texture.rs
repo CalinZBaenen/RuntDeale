@@ -50,5 +50,6 @@ pub(crate) fn load_essential_game_textures(
 
 
 pub(crate) fn spawn_camera(mut commands:Commands) {
-	commands.spawn(Camera2dBundle::new_with_far(1.0));
+	// let camera = Camera2dBundle::default();
+	commands.spawn(Camera2dBundle::default());
 }

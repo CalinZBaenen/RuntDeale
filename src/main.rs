@@ -3,7 +3,7 @@ mod geometry;
 mod plugins;
 mod sysres;
 mod consts;
-	
+
 use bevy::app::App;
 
 
