@@ -1,14 +1,18 @@
 use crate::consts;
 use crate::sysres;
 
+use bevy::ecs::schedule::{
+	common_conditions::run_once, IntoSystemConfigs,
+	Condition, apply_deferred,
+	States
+};
 use bevy::window::{
 	WindowResizeConstraints, WindowResolution,
 	MonitorSelection, WindowPosition,
 	WindowPlugin, Window
 };
-use bevy::ecs::schedule::{IntoSystemConfigs, apply_deferred, States};
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
-use bevy::app::{PluginGroup, PostStartup, Startup, Plugin, App};
+use bevy::app::{PluginGroup, Startup, Plugin, First, App};
 use bevy::core_pipeline::clear_color::ClearColor;
 use bevy::DefaultPlugins;
 
@@ -59,12 +63,14 @@ impl Plugin for InitGamePlugin {
 		// Add the essential systems.  (Ordered by schedule.)
 		app.add_systems(Startup, (
 			sysres::texture::load_essential_game_textures,
-			sysres::camera::sys_spawn_camera,
+			sysres::spawn::sys_spawn_camera,
 			apply_deferred,
-			sysres::draw::draw_player
+			sysres::spawn::sys_spawn_player
 		).chain());
 		
-		app.add_systems(PostStartup, sysres::camera::sys_edit_camera);
+		app.add_systems(First,
+			sysres::camera::sys_edit_camera.run_if(sysres::camera::camera_exists.and_then(run_once()))
+		);
 	}
 }
 

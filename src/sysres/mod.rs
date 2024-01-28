@@ -1,6 +1,6 @@
 pub mod texture;
 pub mod camera;
-pub mod draw;
+pub mod spawn;
 
 use bevy::ecs::system::Resource;
 use bevy::sprite::TextureAtlas;

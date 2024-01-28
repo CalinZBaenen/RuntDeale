@@ -1,8 +1,7 @@
 use crate::components::general::Primary;
 
 use bevy::transform::components::{GlobalTransform, Transform};
-use bevy::ecs::system::{SystemParam, Commands, Query};
-use bevy::core_pipeline::core_2d::Camera2dBundle;
+use bevy::ecs::system::{SystemParam, Query};
 use bevy::render::camera::Camera;
 use bevy::ecs::query::Has;
 use bevy::math::Vec2;
@@ -20,12 +19,6 @@ pub struct CameraEffectParams<'w, 's> {
 
 
 
-pub(crate) fn sys_spawn_camera(mut commands:Commands) {
-	commands.spawn(Camera2dBundle::default()).insert(Primary);
-}
-
-
-
 pub(crate) fn sys_edit_camera(mut params:CameraEffectParams) {
 	for (camera, mut transform, global_transform, is_primary) in &mut params.camq {
 		if !is_primary { continue; }
@@ -35,3 +28,7 @@ pub(crate) fn sys_edit_camera(mut params:CameraEffectParams) {
 		}
 	}
 }
+
+
+
+pub(crate) fn camera_exists(q:Query<&Camera>) -> bool { q.iter().len() > 0 }

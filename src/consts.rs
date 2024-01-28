@@ -27,6 +27,8 @@ pub mod texpath {
 pub mod config {
 	/// The maximum amount of bullets that can be present in one scene.
 	pub const MAX_BULLET_COUNT:u32 = 50;
+	/// The scale factor for tiles and entities.
+	pub const SCALE_FACTOR:f32 = 2.5;
 	/// The player-character's name.
 	pub const PLAYER_NAME:&'static str = "Chloe";
 	/// The standard amount of padding around tilesets.
