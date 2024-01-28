@@ -9,5 +9,5 @@ use bevy::ecs::component::Component;
 #[derive(PartialEq, Component)]
 struct Collidable {
 	boundingbox:Rectangle<f32>,
-	solid:bool,
+	solid:bool
 }

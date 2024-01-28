@@ -13,7 +13,7 @@ pub mod program {
 
 
 /// The paths to different textures.
-pub(crate) mod texpath {
+pub mod texpath {
 	pub const TS_RAINVILLE:&'static str = "textures/tiles/rainville.png";
 	
 	pub const SS_BATTLE_BUTTONS:&'static str = "textures/battle/buttons.png";
@@ -24,7 +24,7 @@ pub(crate) mod texpath {
 
 
 /// Game configuration constants.
-pub(crate) mod config {
+pub mod config {
 	/// The maximum amount of bullets that can be present in one scene.
 	pub const MAX_BULLET_COUNT:u32 = 50;
 	/// The player-character's name.

@@ -13,7 +13,10 @@ pub(crate) fn draw_player(mut commands:Commands, player_texture:Res<PlayerSS>) {
 			scale:Vec3::new(2.75, 2.75, 1.0),
 			..Default::default()
 		},
-		sprite: TextureAtlasSprite::new(0),
+		sprite: TextureAtlasSprite {
+			anchor:bevy::sprite::Anchor::TopLeft,
+			..Default::default()
+		},
 		..Default::default()
 	});
 }

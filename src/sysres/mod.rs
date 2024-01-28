@@ -1,5 +1,6 @@
-pub(crate) mod texture;
-pub(crate) mod draw;
+pub mod texture;
+pub mod camera;
+pub mod draw;
 
 use bevy::ecs::system::Resource;
 use bevy::sprite::TextureAtlas;

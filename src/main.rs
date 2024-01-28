@@ -1,8 +1,8 @@
-mod components;
-mod geometry;
-mod plugins;
-mod sysres;
-mod consts;
+pub        mod components;
+pub        mod geometry;
+pub(crate) mod plugins;
+pub        mod consts;
+pub(crate) mod sysres;
 
 use bevy::app::App;
 

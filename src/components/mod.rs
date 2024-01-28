@@ -1,3 +1,3 @@
-mod entity;
-mod player;
-mod posmas;
+pub mod general;
+pub mod entity;
+pub(crate) mod player;

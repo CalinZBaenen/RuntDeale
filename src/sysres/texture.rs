@@ -48,9 +48,3 @@ pub(crate) fn load_essential_game_textures(
 		None, None
 	)));
 }
-
-
-
-pub(crate) fn spawn_camera(mut commands:Commands) {
-	commands.spawn(Camera2dBundle::default());
-}

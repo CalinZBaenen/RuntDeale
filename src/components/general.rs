@@ -7,27 +7,27 @@ use std::fmt;
 
 
 
-#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
+#[derive(Component, PartialEq, Clone, Debug, Copy)]
 pub struct Location {
-	position:(usize, usize),
+	position:(f32, f32),
 	layer:u8
 }
 
 impl Location {
-	fn new(x:usize, y:usize) -> Self {
+	pub fn new(x:f32, y:f32) -> Self {
 		Self {position:(x, y), layer:1}
 	}
 }
 
 impl Default for Location {
 	fn default() -> Self {
-		Self {position:(0, 0), layer:1}
+		Self {position:(0., 0.), layer:1}
 	}
 }
 
 impl fmt::Display for Location {
 	fn fmt(&self, f:&mut fmt::Formatter) -> fmt::Result {
-		write!(f, "")
+		write!(f, "({}, {})", self.position.0, self.position.1)
 	}
 }
 
@@ -52,3 +52,8 @@ impl Sub for Location {
 		}
 	}
 }
+
+
+
+#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
+pub struct Primary;
