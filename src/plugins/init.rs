@@ -12,7 +12,7 @@ use bevy::window::{
 	WindowPlugin, Window
 };
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
-use bevy::app::{PluginGroup, Startup, Plugin, First, App};
+use bevy::app::{PluginGroup, Startup, Plugin, Update, First, App};
 use bevy::core_pipeline::clear_color::ClearColor;
 use bevy::DefaultPlugins;
 
@@ -71,6 +71,8 @@ impl Plugin for InitGamePlugin {
 		app.add_systems(First,
 			sysres::camera::sys_edit_camera.run_if(sysres::camera::camera_exists.and_then(run_once()))
 		);
+		
+		app.add_systems(Update, sysres::keyboard::sys_handle_freeroaming_controls);
 	}
 }
 

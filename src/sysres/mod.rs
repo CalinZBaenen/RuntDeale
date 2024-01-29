@@ -1,6 +1,8 @@
-pub mod texture;
-pub mod camera;
-pub mod spawn;
+pub(crate) mod keyboard;
+pub(crate) mod texture;
+pub(crate) mod camera;
+pub(crate) mod params;
+pub(crate) mod spawn;
 
 use bevy::ecs::system::Resource;
 use bevy::sprite::TextureAtlas;

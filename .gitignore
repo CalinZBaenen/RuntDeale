@@ -1,4 +1,5 @@
 /Cargo.lock
 /repo_token
+/.gitignore
 /target
 /.git

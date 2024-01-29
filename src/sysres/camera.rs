@@ -1,19 +1,8 @@
-use crate::components::general::Primary;
+use crate::sysres::params::CameraEffectParams;
 
-use bevy::transform::components::{GlobalTransform, Transform};
-use bevy::ecs::system::{SystemParam, Query};
 use bevy::render::camera::Camera;
-use bevy::ecs::query::Has;
+use bevy::ecs::system::Query;
 use bevy::math::Vec2;
-
-
-
-
-
-#[derive(SystemParam)]
-pub struct CameraEffectParams<'w, 's> {
-	camq:Query<'w, 's, (&'static Camera, &'static mut Transform, &'static GlobalTransform, Has<Primary>)>
-}
 
 
 

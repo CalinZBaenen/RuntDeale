@@ -40,13 +40,10 @@ impl Bounds {
 		}
 	}
 	
-	pub fn shift(&mut self, mut x:f32, mut y:f32) {
-		if x > 0. && y > 0. {
-			x *= 0.7;
-			y *= 0.7;
-		}
+	pub fn shift(&mut self, mut x:f32, mut y:f32) -> (f32, f32) {
 		self.physical_bounds.0.0 += x;
 		self.physical_bounds.0.1 += y;
+		(self.physical_bounds.0.0, self.physical_bounds.0.1)
 	}
 }
 
