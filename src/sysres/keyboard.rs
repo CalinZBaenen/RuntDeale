@@ -1,17 +1,19 @@
-use crate::components::{entity::Bounds, player::Player};
-use crate::sysres::params::GeneralEntityParams;
+use crate::sysres::params::{EntityWithSpritesheetQueryItem, EntityWithSpritesheetQuery};
+use crate::components::{entity::Direction, player::Player};
 
-use bevy::ecs::{query::With, system::Res, world::Mut};
+use bevy::ecs::{
+	system::{Query, Res},
+	query::With
+};
 use bevy::input::{keyboard::KeyCode, Input};
-use bevy::transform::components::Transform;
 
 
 
 
 
 pub(crate) fn sys_handle_freeroaming_controls(
-	keys:Res<Input<KeyCode>>,
-	mut query:GeneralEntityParams<With<Player>>
+	mut players:Query<EntityWithSpritesheetQuery, With<Player>>,
+	keys:Res<Input<KeyCode>>
 ) {
 	let (mut mx, mut my) = (0., 0.);
 	
@@ -29,14 +31,22 @@ pub(crate) fn sys_handle_freeroaming_controls(
 		my *= 2.;
 	}
 	
-	query.enq.for_each_mut(move |(mut bounds, mut transform):(Mut<Bounds>, Mut<Transform>)| {
+	players.for_each_mut(move |mut data:EntityWithSpritesheetQueryItem<'_>| {
+		let mut attrs = data.general;
+		
 		if mx > 0. && my > 0. {
 			mx *= 0.7;
 			my *= 0.7;
 		}
 		
-		let (nx, ny) = bounds.shift(mx, my);
-		transform.translation.x = nx;
-		transform.translation.y = ny;
+		let dir = Direction::from_strongest(mx, my).unwrap_or(**attrs.direction.as_ref().unwrap());
+		let (nx, ny) = attrs.bounds.shift(mx, my);
+		
+		attrs.transform.translation.x = nx;
+		attrs.transform.translation.y = ny;
+		*attrs.direction.unwrap()     = dir;
+		
+		dbg!(dir.to_string(), 4*(dir as usize));
+		data.ta_sprite.index = 3*(dir as usize);
 	});
 }

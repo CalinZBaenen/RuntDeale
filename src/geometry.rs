@@ -12,8 +12,8 @@ impl Rectangle {
 	pub fn new(a:f32, b:f32, c:f32, d:f32) -> Self { Self(Point(a, b), Point(c, d)) }
 	
 	pub fn intersects(&self, other:&Self) -> bool {
-		min(self.right(), other.right()) > max(self.0.0, other.0.0) &&
-		min(self.bottom(), other.bottom()) > max(self.0.1, other.0.1)
+		self.right().min(other.right()) > self.0.0.max(other.0.0) &&
+		self.bottom().min(other.bottom()) > self.0.1.max(other.0.1)
 	}
 	pub fn bottom(&self) -> f32 { self.0.1+self.1.1 }
 	pub fn right(&self) -> f32 { self.0.0+self.1.0 }
@@ -39,18 +39,4 @@ impl fmt::Display for Point {
 	fn fmt(&self, f:&mut fmt::Formatter) -> fmt::Result {
 		write!(f, "({}, {})", self.0, self.1)
 	}
-}
-
-
-
-
-
-fn max(x:f32, y:f32) -> f32 {
-	if x > y { return x; }
-	y
-}
-
-fn min(x:f32, y:f32) -> f32 {
-	if x < y { return x; }
-	y
 }

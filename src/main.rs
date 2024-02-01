@@ -3,6 +3,7 @@ pub        mod geometry;
 pub(crate) mod plugins;
 pub        mod consts;
 pub(crate) mod sysres;
+pub        mod fns;
 
 use bevy::app::App;
 

@@ -5,6 +5,7 @@ use bevy::sprite::SpriteSheetBundle;
 use bevy::ecs::bundle::Bundle;
 
 use std::convert::From;
+use std::fmt;
 
 
 
@@ -14,6 +15,43 @@ use std::convert::From;
 pub struct EntityBundle {
 	pub(crate) sprites:SpriteSheetBundle,
 	pub(crate) bounds:Bounds
+}
+
+
+
+#[repr(usize)]
+#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
+pub enum Direction {
+	North = 2,
+	South = 0,
+	East  = 3,
+	West  = 1
+}
+
+impl Direction {
+	pub fn from_strongest(x:f32, y:f32) -> Option<Self> {
+		let (xa, ya) = (x.abs(), y.abs());
+		if xa > ya && x < 0. { return Some(Self::West); }
+		if xa > ya && x > 0. { return Some(Self::East); }
+		if xa < ya && y < 0. { return Some(Self::South); }
+		if xa < ya && y > 0. { return Some(Self::North); }
+		None
+	}
+}
+
+impl Default for Direction {
+	fn default() -> Self { Self::South }
+}
+
+impl fmt::Display for Direction {
+	fn fmt(&self, f:&mut fmt::Formatter) -> fmt::Result {
+		write!(f, "{}", match *self {
+			Self::North => "north",
+			Self::South => "south",
+			Self::East  => "east",
+			Self::West  => "west"
+		})
+	}
 }
 
 

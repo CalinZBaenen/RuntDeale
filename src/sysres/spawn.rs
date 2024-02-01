@@ -44,6 +44,7 @@ pub(crate) fn sys_spawn_player(mut commands:Commands, player_texture:Res<PlayerS
 				..Default::default()
 			}
 		},
+		direction: Default::default(),
 		player:Player
 	});
 }
