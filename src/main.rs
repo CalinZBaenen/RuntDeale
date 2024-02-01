@@ -1,9 +1,10 @@
-pub        mod components;
-pub        mod geometry;
-pub(crate) mod plugins;
-pub        mod consts;
-pub(crate) mod sysres;
-pub        mod fns;
+pub mod components;
+pub mod resources;
+pub mod geometry;
+pub mod plugins;
+pub mod systems;
+pub mod consts;
+pub mod params;
 
 use bevy::app::App;
 

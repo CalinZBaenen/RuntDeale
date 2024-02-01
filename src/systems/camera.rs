@@ -1,4 +1,4 @@
-use crate::sysres::params::CameraEffectParams;
+use crate::params::CameraEffectParams;
 
 use bevy::render::camera::Camera;
 use bevy::ecs::system::Query;

@@ -4,7 +4,7 @@ use crate::components::{
 	general::Primary
 };
 use crate::consts::config::SCALE_FACTOR;
-use crate::sysres::PlayerSS;
+use crate::resources::PlayerSS;
 
 use bevy::sprite::{TextureAtlasSprite, SpriteSheetBundle, Anchor};
 use bevy::core_pipeline::core_2d::Camera2dBundle;

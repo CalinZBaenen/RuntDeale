@@ -1,15 +1,15 @@
+use crate::resources::{BattleSS, Tilesets};
+use crate::systems;
 use crate::consts;
-use crate::sysres;
 
-use bevy::ecs::schedule::{
-	common_conditions::run_once, IntoSystemConfigs,
-	Condition, apply_deferred,
-	States
-};
 use bevy::window::{
 	WindowResizeConstraints, WindowResolution,
 	MonitorSelection, WindowPosition,
 	WindowPlugin, Window
+};
+use bevy::ecs::schedule::{
+	common_conditions::run_once, IntoSystemConfigs,
+	apply_deferred, Condition, States
 };
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
 use bevy::app::{PluginGroup, Startup, Plugin, Update, First, App};
@@ -27,8 +27,8 @@ pub(crate) struct InitGamePlugin;
 impl Plugin for InitGamePlugin {
 	fn build(&self, app:&mut App) {
 		// Initialize and insert resources.
-		app.init_resource::<sysres::BattleSS>();
-		app.init_resource::<sysres::Tilesets>();
+		app.init_resource::<BattleSS>();
+		app.init_resource::<Tilesets>();
 		
 		app.insert_resource(ClearColor(Color::BLACK));
 		app.insert_resource(Msaa::Off);
@@ -62,24 +62,24 @@ impl Plugin for InitGamePlugin {
 		
 		// Add the essential systems.  (Ordered by schedule.)
 		app.add_systems(Startup, (
-			sysres::texture::load_essential_game_textures,
-			sysres::spawn::sys_spawn_camera,
+			systems::texture::load_essential_game_textures,
 			apply_deferred,
-			sysres::spawn::sys_spawn_player
+			systems::spawn::sys_spawn_camera,
+			systems::spawn::sys_spawn_player
 		).chain());
 		
 		app.add_systems(First,
-			sysres::camera::sys_edit_camera.run_if(sysres::camera::camera_exists.and_then(run_once()))
+			systems::camera::sys_edit_camera.run_if(systems::camera::camera_exists.and_then(run_once()))
 		);
 		
-		app.add_systems(Update, sysres::keyboard::sys_handle_freeroaming_controls);
+		app.add_systems(Update, systems::keyboard::sys_handle_freeroaming_controls);
 	}
 }
 
 
 
 #[derive(PartialEq, States, Clone, Debug, Copy, Hash, Eq)]
-pub(crate) enum Gamestate {
+pub enum Gamestate {
 	Dialogue,
 	Roaming,
 	Battle,

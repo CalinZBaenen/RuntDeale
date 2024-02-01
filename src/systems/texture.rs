@@ -1,4 +1,4 @@
-use super::{BattleSS, PlayerSS, Tilesets};
+use crate::resources::{Tilesets, BattleSS, PlayerSS};
 use crate::consts;
 
 use bevy::prelude::*;

@@ -1,4 +1,4 @@
-use crate::sysres::params::{EntityWithSpritesheetQueryItem, EntityWithSpritesheetQuery};
+use crate::params::{EntityWithSpritesheetQueryItem, EntityWithSpritesheetQuery};
 use crate::components::{entity::Direction, player::Player};
 
 use bevy::ecs::{
@@ -46,7 +46,6 @@ pub(crate) fn sys_handle_freeroaming_controls(
 		attrs.transform.translation.y = ny;
 		*attrs.direction.unwrap()     = dir;
 		
-		dbg!(dir.to_string(), 4*(dir as usize));
 		data.ta_sprite.index = 3*(dir as usize);
 	});
 }
