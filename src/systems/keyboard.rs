@@ -2,8 +2,8 @@ use crate::params::{EntityWithSpritesheetQuery, CameraQuery};
 use crate::components::{entity::Direction, player::Player};
 
 use bevy::ecs::{
-	system::{Query, Res},
-	query::With
+	query::{Without, With},
+	system::{Query, Res}
 };
 use bevy::input::{keyboard::KeyCode, Input};
 use bevy::math::Vec2;
@@ -13,7 +13,7 @@ use bevy::math::Vec2;
 
 
 pub(crate) fn sys_handle_freeroaming_controls(
-	mut cameras:Query<CameraQuery>,
+	mut cameras:Query<CameraQuery, Without<Player>>,
 	mut players:Query<EntityWithSpritesheetQuery, With<Player>>,
 	keys:Res<Input<KeyCode>>
 ) {
