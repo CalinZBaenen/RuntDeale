@@ -1,4 +1,4 @@
-use crate::params::{EntityWithSpritesheetQueryItem, EntityWithSpritesheetQuery};
+use crate::params::{EntityWithSpritesheetQuery, CameraQuery};
 use crate::components::{entity::Direction, player::Player};
 
 use bevy::ecs::{
@@ -6,12 +6,14 @@ use bevy::ecs::{
 	query::With
 };
 use bevy::input::{keyboard::KeyCode, Input};
+use bevy::math::Vec2;
 
 
 
 
 
 pub(crate) fn sys_handle_freeroaming_controls(
+	mut cameras:Query<CameraQuery>,
 	mut players:Query<EntityWithSpritesheetQuery, With<Player>>,
 	keys:Res<Input<KeyCode>>
 ) {
@@ -31,13 +33,13 @@ pub(crate) fn sys_handle_freeroaming_controls(
 		my *= 2.;
 	}
 	
-	players.for_each_mut(move |mut data:EntityWithSpritesheetQueryItem<'_>| {
-		let mut attrs = data.general;
-		
-		if mx > 0. && my > 0. {
-			mx *= 0.7;
-			my *= 0.7;
-		}
+	if mx > 0. && my > 0. {
+		mx *= 0.7;
+		my *= 0.7;
+	}
+	
+	for mut pq in &mut players {
+		let mut attrs = pq.general;
 		
 		let dir = Direction::from_strongest(mx, my).unwrap_or(**attrs.direction.as_ref().unwrap());
 		let (nx, ny) = attrs.bounds.shift(mx, my);
@@ -46,6 +48,14 @@ pub(crate) fn sys_handle_freeroaming_controls(
 		attrs.transform.translation.y = ny;
 		*attrs.direction.unwrap()     = dir;
 		
-		data.ta_sprite.index = 3*(dir as usize);
-	});
+		pq.ta_sprite.index = 3*(dir as usize);
+	};
+	
+	for mut camera in &mut cameras {
+		if !camera.is_primary { continue; }
+		if let Some(translation) = camera.camera.viewport_to_world_2d(camera.global_transform, Vec2::splat(0.0)) {
+			let translation = Vec2::new(translation.x*mx, translation.y*my);
+			camera.transform.translation = (1.0 * translation).extend(camera.transform.translation.z);
+		}
+	}
 }

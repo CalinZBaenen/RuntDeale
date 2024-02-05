@@ -68,10 +68,6 @@ impl Plugin for InitGamePlugin {
 			systems::spawn::sys_spawn_player
 		).chain());
 		
-		app.add_systems(First,
-			systems::camera::sys_edit_camera.run_if(systems::camera::camera_exists.and_then(run_once()))
-		);
-		
 		app.add_systems(Update, systems::keyboard::sys_handle_freeroaming_controls);
 	}
 }
