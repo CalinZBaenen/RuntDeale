@@ -1,7 +1,7 @@
 use crate::components::{
 	entity::{EntityBundle, Bounds},
 	player::{PlayerBundle, Player},
-	general::Primary
+	general::{Primary, Follow}
 };
 use crate::consts::config::SCALE_FACTOR;
 use crate::resources::PlayerSS;
@@ -17,7 +17,7 @@ use bevy::math::Vec3;
 
 
 pub(crate) fn sys_spawn_camera(mut commands:Commands) {
-	commands.spawn(Camera2dBundle::default()).insert(Primary);
+	commands.spawn(Camera2dBundle::default()).insert((Primary, Follow::Horizontal));
 }
 
 

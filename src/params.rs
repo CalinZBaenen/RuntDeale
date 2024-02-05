@@ -1,9 +1,9 @@
 use crate::components::{
 	entity::{Direction, Bounds},
-	general::Primary
+	general::{Primary, Follow}
 };
 
-use bevy::transform::components::{GlobalTransform, Transform};
+use bevy::transform::components::Transform;
 use bevy::ecs::query::{WorldQuery, Has};
 use bevy::sprite::TextureAtlasSprite;
 use bevy::render::camera::Camera;
@@ -34,8 +34,8 @@ pub struct EntityWithSpritesheetQuery {
 #[derive(WorldQuery)]
 #[world_query(mutable)]
 pub struct CameraQuery {
-	pub global_transform:&'static GlobalTransform,
 	pub is_primary:Has<Primary>,
 	pub transform:&'static mut Transform,
-	pub camera:&'static Camera
+	pub camera:&'static Camera,
+	pub follow:Option<&'static Follow>
 }

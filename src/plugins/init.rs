@@ -12,7 +12,7 @@ use bevy::ecs::schedule::{
 	apply_deferred, Condition, States
 };
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
-use bevy::app::{PluginGroup, Startup, Plugin, Update, First, App};
+use bevy::app::{PluginGroup, Startup, Plugin, Update, App};
 use bevy::core_pipeline::clear_color::ClearColor;
 use bevy::DefaultPlugins;
 
