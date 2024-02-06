@@ -7,10 +7,7 @@ use bevy::window::{
 	MonitorSelection, WindowPosition,
 	WindowPlugin, Window
 };
-use bevy::ecs::schedule::{
-	common_conditions::run_once, IntoSystemConfigs,
-	apply_deferred, Condition, States
-};
+use bevy::ecs::schedule::{IntoSystemConfigs, apply_deferred, States};
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
 use bevy::app::{PluginGroup, Startup, Plugin, Update, App};
 use bevy::core_pipeline::clear_color::ClearColor;

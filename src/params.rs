@@ -1,7 +1,4 @@
-use crate::components::{
-	entity::{Direction, Bounds},
-	general::{Primary, Follow}
-};
+use crate::components::{plane::{Direction, Bounds, Follow}, marker::Primary};
 
 use bevy::transform::components::Transform;
 use bevy::ecs::query::{WorldQuery, Has};

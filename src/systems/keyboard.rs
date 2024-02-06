@@ -1,6 +1,6 @@
 use crate::components::{
-	general::Follow, entity::Direction,
-	player::Player
+	plane::{Direction, Follow},
+	actor::Player
 };
 use crate::params::{EntityWithSpritesheetQuery, CameraQuery};
 
