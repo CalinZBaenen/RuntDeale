@@ -17,23 +17,21 @@ use std::fmt;
 
 #[derive(PartialEq, States, Clone, Debug, Copy, Hash, Eq)]
 pub enum Gamestate {
-	Dialogue,
+	EnteringMap,
 	Roaming,
-	Battle,
 	Menu
 }
 
 impl Default for Gamestate {
-	fn default() -> Self { Self::Menu }
+	fn default() -> Self { Self::EnteringMap }
 }
 
 impl fmt::Display for Gamestate {
 	fn fmt(&self, f:&mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", match self {
-			Self::Dialogue => "dialogue",
-			Self::Roaming  => "roaming mode",
-			Self::Battle   => "battle mode",
-			Self::Menu     => "in menu"
+			Self::EnteringMap => "*loading map*",
+			Self::Roaming     => "roaming mode",
+			Self::Menu        => "in menu"
 		})
 	}
 }
@@ -43,8 +41,12 @@ impl fmt::Display for Gamestate {
 
 
 fn main() {
-	let _ = App::new().add_plugins((
+	let mut app = App::new();
+	
+	app.add_plugins((
 		plugins::controls::GameControlsPlugin,
 		plugins::init::InitGamePlugin
-	)).run();
+	));
+	
+	app.run();
 }

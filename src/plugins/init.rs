@@ -9,9 +9,9 @@ use bevy::window::{
 	WindowPlugin, Window
 };
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
+use bevy::ecs::schedule::{IntoSystemConfigs, apply_deferred};
 use bevy::app::{PluginGroup, Startup, Plugin, App};
 use bevy::core_pipeline::clear_color::ClearColor;
-use bevy::ecs::schedule::IntoSystemConfigs;
 use bevy::DefaultPlugins;
 
 
@@ -59,7 +59,8 @@ impl Plugin for InitGamePlugin {
 		// Add the essential systems.  (Ordered by schedule.)
 		app.add_systems(Startup, (
 			initsys_load_crcucial_textures,
-			initsys_spawn_camera
+			initsys_spawn_camera,
+			apply_deferred
 		).chain());
 	}
 }
