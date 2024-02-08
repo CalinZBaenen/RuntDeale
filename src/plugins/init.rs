@@ -1,5 +1,6 @@
 use crate::systems::init::{initsys_load_crcucial_textures, initsys_spawn_camera};
 use crate::resources::{BattleSS, Tilesets};
+use crate::Gamestate;
 use crate::consts;
 
 use bevy::window::{
@@ -8,12 +9,10 @@ use bevy::window::{
 	WindowPlugin, Window
 };
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
-use bevy::ecs::schedule::{IntoSystemConfigs, States};
 use bevy::app::{PluginGroup, Startup, Plugin, App};
 use bevy::core_pipeline::clear_color::ClearColor;
+use bevy::ecs::schedule::IntoSystemConfigs;
 use bevy::DefaultPlugins;
-
-use std::fmt;
 
 
 
@@ -62,30 +61,5 @@ impl Plugin for InitGamePlugin {
 			initsys_load_crcucial_textures,
 			initsys_spawn_camera
 		).chain());
-	}
-}
-
-
-
-#[derive(PartialEq, States, Clone, Debug, Copy, Hash, Eq)]
-pub enum Gamestate {
-	Dialogue,
-	Roaming,
-	Battle,
-	Menu
-}
-
-impl Default for Gamestate {
-	fn default() -> Self { Self::Menu }
-}
-
-impl fmt::Display for Gamestate {
-	fn fmt(&self, f:&mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", match self {
-			Self::Dialogue => "dialogue",
-			Self::Roaming  => "roaming mode",
-			Self::Battle   => "battle mode",
-			Self::Menu     => "in menu"
-		})
 	}
 }
