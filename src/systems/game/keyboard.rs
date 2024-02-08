@@ -20,27 +20,27 @@ pub(crate) fn sys_handle_freeroaming_controls(
 	mut players:Query<EntityWithSpritesheetQuery, With<Player>>,
 	keys:Res<Input<KeyCode>>
 ) {
-	let mut r#move = Vec2::new(0., 0.);
+	let mut mvmnt = Vec2::new(0., 0.);
 	
 	for &key in keys.get_pressed() {
 		match key {
-			KeyCode::Right | KeyCode::D => { r#move.x += 1.; }
-			KeyCode::Down  | KeyCode::S => { r#move.y -= 1.; }
-			KeyCode::Left  | KeyCode::A => { r#move.x -= 1.; }
-			KeyCode::Up    | KeyCode::W => { r#move.y += 1.; }
+			KeyCode::Right | KeyCode::D => { mvmnt.x += 1.; }
+			KeyCode::Down  | KeyCode::S => { mvmnt.y -= 1.; }
+			KeyCode::Left  | KeyCode::A => { mvmnt.x -= 1.; }
+			KeyCode::Up    | KeyCode::W => { mvmnt.y += 1.; }
 			_ => {}
 		}
 	}
 	
-	if r#move.x != 0. && r#move.y != 0. { r#move = r#move.normalize_or_zero(); }
-	if keys.pressed(KeyCode::ControlLeft) { r#move *= 2.; }
+	mvmnt = mvmnt.normalize_or_zero();
+	if keys.pressed(KeyCode::ControlLeft) { mvmnt *= 2.; }
 	
 	let (mut nx, mut ny) = (0., 0.);
 	for mut pq in &mut players {
 		let mut attrs = pq.general;
 		
-		let dir = Direction::from_strongest(r#move.x, r#move.y).unwrap_or(**attrs.direction.as_ref().unwrap());
-		(nx, ny) = attrs.bounds.shift(r#move.x, r#move.y);
+		let dir = Direction::from_strongest(mvmnt.x, mvmnt.y).unwrap_or(**attrs.direction.as_ref().unwrap());
+		(nx, ny) = attrs.bounds.shift(mvmnt.x, mvmnt.y);
 		
 		attrs.transform.translation.x = nx;
 		attrs.transform.translation.y = ny;
@@ -52,7 +52,7 @@ pub(crate) fn sys_handle_freeroaming_controls(
 	for mut camera in &mut cameras {
 		if !camera.is_primary { continue; }
 		
-		let follow = camera.follow.unwrap_or(&Follow::Both);
+		let follow = camera.follow.unwrap_or(&Follow::DEFAULT);
 		let translation = Vec2::new(
 			if follow.horizontal() { nx } else { 0. },
 			if follow.vertical() { ny } else { 0. }

@@ -1,13 +1,18 @@
+use crate::components::{marker::Primary, plane::Follow};
 use crate::resources::{Tilesets, BattleSS, PlayerSS};
 use crate::consts;
 
-use bevy::prelude::*;
+use bevy::core_pipeline::core_2d::Camera2dBundle;
+use bevy::ecs::system::{Commands, ResMut};
+use bevy::asset::{AssetServer, Assets};
+use bevy::sprite::TextureAtlas;
+use bevy::math::Vec2;
 
 
 
 
 
-pub(crate) fn load_essential_game_textures(
+pub(crate) fn initsys_load_crcucial_textures(
 	mut battle_textures:ResMut<BattleSS>,
 	mut texture_atlases:ResMut<Assets<TextureAtlas>>,
 	mut commands:Commands,
@@ -47,4 +52,12 @@ pub(crate) fn load_essential_game_textures(
 		7, 2,
 		None, None
 	)));
+}
+
+
+
+
+
+pub(crate) fn initsys_spawn_camera(mut commands:Commands) {
+	commands.spawn(Camera2dBundle::default()).insert((Primary, Follow::Horizontal));
 }

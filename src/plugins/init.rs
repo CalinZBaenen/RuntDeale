@@ -1,5 +1,5 @@
+use crate::systems::init::{initsys_load_crcucial_textures, initsys_spawn_camera};
 use crate::resources::{BattleSS, Tilesets};
-use crate::systems;
 use crate::consts;
 
 use bevy::window::{
@@ -7,9 +7,9 @@ use bevy::window::{
 	MonitorSelection, WindowPosition,
 	WindowPlugin, Window
 };
-use bevy::ecs::schedule::{IntoSystemConfigs, apply_deferred, States};
 use bevy::render::{texture::ImagePlugin, color::Color, view::Msaa};
-use bevy::app::{PluginGroup, Startup, Plugin, Update, App};
+use bevy::ecs::schedule::{IntoSystemConfigs, States};
+use bevy::app::{PluginGroup, Startup, Plugin, App};
 use bevy::core_pipeline::clear_color::ClearColor;
 use bevy::DefaultPlugins;
 
@@ -59,13 +59,9 @@ impl Plugin for InitGamePlugin {
 		
 		// Add the essential systems.  (Ordered by schedule.)
 		app.add_systems(Startup, (
-			systems::texture::load_essential_game_textures,
-			apply_deferred,
-			systems::spawn::sys_spawn_camera,
-			systems::spawn::sys_spawn_player
+			initsys_load_crcucial_textures,
+			initsys_spawn_camera
 		).chain());
-		
-		app.add_systems(Update, systems::keyboard::sys_handle_freeroaming_controls);
 	}
 }
 

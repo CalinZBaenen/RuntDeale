@@ -147,6 +147,8 @@ pub mod plane {
 	}
 	
 	impl Follow {
+		pub const DEFAULT:Self = Self::Both;
+		
 		pub const fn horizontal(self) -> bool {
 			match self {
 				Self::Horizontal | Self::Both => true,
