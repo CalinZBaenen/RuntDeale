@@ -1,6 +1,5 @@
 pub        mod components;
 pub        mod resources;
-pub        mod geometry;
 pub(crate) mod plugins;
 pub        mod systems;
 pub        mod consts;

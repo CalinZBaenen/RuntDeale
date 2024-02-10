@@ -1,6 +1,9 @@
-use crate::systems::game::{
-	keyboard::sys_handle_freeroaming_controls,
-	spawn::sys_spawn_player
+use crate::systems::{
+	game::{
+		keyboard::sys_handle_freeroaming_controls,
+		spawn::sys_spawn_player
+	},
+	init::initsys_load_crcucial_textures
 };
 use crate::Gamestate;
 
@@ -26,6 +29,10 @@ impl Plugin for GameplayPlugin {
 			|mut state:ResMut<NextState<Gamestate>>| { state.set(Gamestate::Roaming) }
 		));
 		
-		app.add_systems(Update, sys_handle_freeroaming_controls.run_if( in_state(Gamestate::Roaming) ));
+		app.add_systems(
+			Update,
+			sys_handle_freeroaming_controls.run_if( in_state(Gamestate::Roaming) )
+				.after(initsys_load_crcucial_textures)
+		);
 	}
 }

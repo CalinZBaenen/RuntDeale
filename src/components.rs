@@ -52,8 +52,6 @@ pub mod actor {
 
 
 pub mod plane {
-	use crate::geometry::Rectangle;
-	
 	use bevy::ecs::component::Component;
 	
 	use std::fmt;
@@ -102,20 +100,18 @@ pub mod plane {
 	/// Represents the bounds that an entity lies within.
 	#[derive(Component, PartialEq, Default, Clone, Debug, Copy)]
 	pub struct Bounds {
-		pub(crate) bounds:Rectangle,
+		pub(crate) bounds:(f32, f32, f32, f32),
 		pub(crate) solid:bool
 	}
 
 	impl Bounds {
 		/// Creates the `Bounds` from a 'flat' set of points.
-		pub fn flat(a:f32, b:f32, c:f32, d:f32) -> Self {
-			Self::new(Rectangle::new((a, b), c, d))
-		}
+		pub fn flat(a:f32, b:f32, c:f32, d:f32) -> Self { Self::new((a, b), c, d) }
 		/// Creates the `Bounds` with default values for all except the physical bounds.
-		pub fn new(bounds:Rectangle) -> Self {
+		pub fn new(loc:(f32, f32), width:f32, height:f32) -> Self {
 			Self {
-				bounds,
-				..Default::default()
+				bounds:(loc.0, loc.1, width, height),
+				solid:false
 			}
 		}
 		
@@ -126,6 +122,14 @@ pub mod plane {
 			self.bounds.1 += y;
 			(self.bounds.0, self.bounds.1)
 		}
+	
+		pub fn intersects(&self, other:&Self) -> bool {
+			self.right().min(other.right()) > self.bounds.0.max(other.bounds.0) &&
+			self.bottom().min(other.bottom()) > self.bounds.1.max(other.bounds.1)
+		}
+		pub fn bottom(&self) -> f32 { self.bounds.1+self.bounds.3 }
+		pub fn right(&self) -> f32 { self.bounds.0+self.bounds.2 }
+		pub fn area(&self) -> f32 { self.bounds.2*self.bounds.3 }
 	}
 	
 	

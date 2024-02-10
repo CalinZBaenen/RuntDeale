@@ -22,6 +22,7 @@ pub(crate) fn sys_handle_freeroaming_controls(
 	mut players:Query<ActorWithSpritesheetQuery, With<Player>>,
 	keys:Res<Input<KeyCode>>
 ) {
+	// Player movement.
 	let mut mvmnt = Vec2::new(0., 0.);
 	
 	for &key in keys.get_pressed() {
