@@ -48,6 +48,7 @@ fn main() {
 	
 	app.add_plugins((
 		plugins::controls::GameControlsPlugin,
+		plugins::gameplay::GameplayPlugin,
 		plugins::init::InitGamePlugin
 	));
 	
