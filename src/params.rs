@@ -9,9 +9,10 @@ use bevy::render::camera::Camera;
 
 
 
+/// A query used to obtain entities with some general (actor) components, such as `Bounds`.
 #[derive(WorldQuery)]
 #[world_query(mutable)]
-pub struct GeneralEntityQuery {
+pub struct ActorQuery {
 	pub direction:Option<&'static mut Direction>,
 	pub transform:&'static mut Transform,
 	pub bounds:&'static mut Bounds
@@ -19,15 +20,18 @@ pub struct GeneralEntityQuery {
 
 
 
+/// A query used to obtain entities that have a spritesheet.  
+/// (Unintuitively made to accomodate Bevy's distinction between `Sprite` and `TextureAtlasSprite`.)
 #[derive(WorldQuery)]
 #[world_query(mutable)]
-pub struct EntityWithSpritesheetQuery {
+pub struct ActorWithSpritesheetQuery {
 	pub ta_sprite:&'static mut TextureAtlasSprite,
-	pub general:GeneralEntityQuery
+	pub general:ActorQuery
 }
 
 
 
+/// A query used to obtain entities that are cameras.
 #[derive(WorldQuery)]
 #[world_query(mutable)]
 pub struct CameraQuery {

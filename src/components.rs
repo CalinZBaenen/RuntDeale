@@ -5,6 +5,7 @@ pub mod marker {
 	
 	
 	
+	/// Marks an entity as the primary one for its genera.
 	#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
 	pub struct Primary;
 }
@@ -41,6 +42,7 @@ pub mod actor {
 	
 	
 	
+	/// Marks an entity as a playable thing.
 	#[derive(Component, Clone, Copy)]
 	pub struct Player;
 }
@@ -54,7 +56,6 @@ pub mod plane {
 	
 	use bevy::ecs::component::Component;
 	
-	use std::convert::From;
 	use std::fmt;
 	
 	
@@ -98,51 +99,47 @@ pub mod plane {
 	
 	
 	
+	/// Represents the bounds that an entity lies within.
 	#[derive(Component, PartialEq, Default, Clone, Debug, Copy)]
 	pub struct Bounds {
-		pub(crate) physical_bounds:Rectangle,
-		pub(crate) texture_bounds:Option<Rectangle>,
+		pub(crate) bounds:Rectangle,
 		pub(crate) solid:bool
 	}
 
 	impl Bounds {
-		pub fn with_texture_bounds(physical_bounds:Rectangle, texture_bounds:Rectangle) -> Self {
-			Self {
-				physical_bounds,
-				texture_bounds:Some(texture_bounds),
-				solid:false
-			}
+		/// Creates the `Bounds` from a 'flat' set of points.
+		pub fn flat(a:f32, b:f32, c:f32, d:f32) -> Self {
+			Self::new(Rectangle::new((a, b), c, d))
 		}
-		pub fn new(physical_bounds:Rectangle) -> Self {
+		/// Creates the `Bounds` with default values for all except the physical bounds.
+		pub fn new(bounds:Rectangle) -> Self {
 			Self {
-				physical_bounds,
+				bounds,
 				..Default::default()
 			}
 		}
 		
+		/// Moves the location of the contained rectangle by a
+		/// specified amount and returns the new location.
 		pub fn shift(&mut self, x:f32, y:f32) -> (f32, f32) {
-			self.physical_bounds.0.0 += x;
-			self.physical_bounds.0.1 += y;
-			(self.physical_bounds.0.0, self.physical_bounds.0.1)
-		}
-	}
-
-	impl From<(f32, f32, f32, f32)> for Bounds {
-		fn from(bounds:(f32, f32, f32, f32)) -> Self {
-			Self {
-				physical_bounds:bounds.into(),
-				..Default::default()
-			}
+			self.bounds.0 += x;
+			self.bounds.1 += y;
+			(self.bounds.0, self.bounds.1)
 		}
 	}
 	
 	
 	
+	/// Determines in what directions something will follow another.
 	#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
 	pub enum Follow {
+		/// Follows on the X-axis.
 		Horizontal,
+		/// Follows on the Y-axis.
 		Vertical,
+		/// Follows on neither axes.
 		Neither,
+		/// Follows on both axes.
 		Both
 	}
 	

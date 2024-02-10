@@ -15,10 +15,14 @@ use std::fmt;
 
 
 
+/// The current state of the game.
 #[derive(PartialEq, States, Clone, Debug, Copy, Hash, Eq)]
 pub enum Gamestate {
+	/// The player is about to enter the 'map' portion of the game. (`EnteringMap` -> `Roaming`)
 	EnteringMap,
+	/// The player is onscreen and can move about freely.
 	Roaming,
+	/// A menu is present.
 	Menu
 }
 

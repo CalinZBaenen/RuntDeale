@@ -14,6 +14,7 @@ use bevy::math::Vec3;
 
 
 
+/// Spawns the player.
 pub fn sys_spawn_player(mut commands:Commands, player_texture:Res<PlayerSS>) {
 	let ssb = SpriteSheetBundle {
 		texture_atlas: player_texture.0.clone(),
@@ -31,10 +32,7 @@ pub fn sys_spawn_player(mut commands:Commands, player_texture:Res<PlayerSS>) {
 	commands.spawn(PlayerBundle {
 		attributes: EntityBundle {
 			sprites:ssb.clone(),
-			bounds: Bounds {
-				physical_bounds:(0., 0., 20., 29.).into(),
-				..Default::default()
-			}
+			bounds: Bounds::flat(0., 0., 20., 29.)
 		},
 		direction: Default::default(),
 		player:Player
@@ -42,9 +40,6 @@ pub fn sys_spawn_player(mut commands:Commands, player_texture:Res<PlayerSS>) {
 	
 	commands.spawn(EntityBundle {
 		sprites:ssb.clone(),
-		bounds: Bounds {
-			physical_bounds:(0., 0., 20., 29.).into(),
-			..Default::default()
-		}
+		bounds: Bounds::flat(0., 0., 20., 29.)
 	});
 }

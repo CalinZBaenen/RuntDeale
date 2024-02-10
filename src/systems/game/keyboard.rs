@@ -2,7 +2,7 @@ use crate::components::{
 	plane::{Direction, Follow},
 	actor::Player
 };
-use crate::params::{EntityWithSpritesheetQuery, CameraQuery};
+use crate::params::{ActorWithSpritesheetQuery, CameraQuery};
 
 use bevy::ecs::{
 	query::{Without, With},
@@ -15,9 +15,11 @@ use bevy::math::Vec2;
 
 
 
+/// Handles the controls when the player should be in a `Roaming` state,
+/// like on the map or in the battlebox.
 pub(crate) fn sys_handle_freeroaming_controls(
 	mut cameras:Query<CameraQuery, Without<Player>>,
-	mut players:Query<EntityWithSpritesheetQuery, With<Player>>,
+	mut players:Query<ActorWithSpritesheetQuery, With<Player>>,
 	keys:Res<Input<KeyCode>>
 ) {
 	let mut mvmnt = Vec2::new(0., 0.);

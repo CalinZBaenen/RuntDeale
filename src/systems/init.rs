@@ -12,6 +12,8 @@ use bevy::math::Vec2;
 
 
 
+/// Loads the textures essential to the game, such as the
+/// player-character's textures, the souls, et cetera.
 pub(crate) fn initsys_load_crcucial_textures(
 	mut battle_textures:ResMut<BattleSS>,
 	mut texture_atlases:ResMut<Assets<TextureAtlas>>,
@@ -58,6 +60,7 @@ pub(crate) fn initsys_load_crcucial_textures(
 
 
 
+/// Spawns the primary camera.
 pub(crate) fn initsys_spawn_camera(mut commands:Commands) {
 	commands.spawn(Camera2dBundle::default()).insert((Primary, Follow::Horizontal));
 }
