@@ -1,8 +1,6 @@
-use crate::components::{marker::Primary, plane::Follow};
 use crate::resources::{Tilesets, BattleSS, PlayerSS};
 use crate::consts;
 
-use bevy::core_pipeline::core_2d::Camera2dBundle;
 use bevy::ecs::system::{Commands, ResMut};
 use bevy::asset::{AssetServer, Assets};
 use bevy::sprite::TextureAtlas;
@@ -54,13 +52,4 @@ pub(crate) fn initsys_load_crcucial_textures(
 		7, 2,
 		None, None
 	)));
-}
-
-
-
-
-
-/// Spawns the primary camera.
-pub(crate) fn initsys_spawn_camera(mut commands:Commands) {
-	commands.spawn(Camera2dBundle::default()).insert((Primary, Follow::Horizontal));
 }

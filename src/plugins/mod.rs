@@ -1,4 +1,3 @@
-pub(crate) mod controls;
 pub(crate) mod gameplay;
-pub(crate) mod title;
+pub(crate) mod menu;
 pub(crate) mod init;

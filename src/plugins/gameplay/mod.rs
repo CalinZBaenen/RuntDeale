@@ -1,9 +1,9 @@
-use crate::systems::{
-	game::{
-		keyboard::sys_handle_freeroaming_controls,
-		spawn::sys_spawn_player
-	},
-	init::initsys_load_crcucial_textures
+pub(crate) mod player;
+pub(crate) mod spawn;
+
+use crate::plugins::gameplay::{
+	player::sys_handle_freeroaming_controls,
+	spawn::sys_spawn_player
 };
 use crate::Gamestate;
 
@@ -32,7 +32,6 @@ impl Plugin for GameplayPlugin {
 		app.add_systems(
 			Update,
 			sys_handle_freeroaming_controls.run_if( in_state(Gamestate::Roaming) )
-				.after(initsys_load_crcucial_textures)
 		);
 	}
 }

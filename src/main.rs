@@ -1,16 +1,21 @@
 pub        mod components;
 pub        mod resources;
+pub        mod entities;
 pub(crate) mod plugins;
-pub        mod systems;
 pub        mod consts;
 pub        mod params;
 
-use bevy::ecs::schedule::States;
+use bevy::ecs::schedule::{SystemSet, States};
 use bevy::app::App;
 
 use std::fmt;
 
 
+
+
+
+#[derive(PartialEq, SystemSet, Clone, Debug, Copy, Hash, Eq)]
+pub struct InitSystem;
 
 
 
@@ -47,7 +52,6 @@ fn main() {
 	let mut app = App::new();
 	
 	app.add_plugins((
-		plugins::controls::GameControlsPlugin,
 		plugins::gameplay::GameplayPlugin,
 		plugins::init::InitGamePlugin
 	));

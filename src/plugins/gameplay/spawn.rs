@@ -1,7 +1,9 @@
 use crate::components::{
-	actor::{EntityBundle, PlayerBundle, Player},
+	texture::Texture,
+	marker::Player,
 	plane::Bounds
 };
+use crate::entities::{PlayerBundle, ActorBundle};
 use crate::consts::config::SCALE_FACTOR;
 use crate::resources::PlayerSS;
 
@@ -30,16 +32,17 @@ pub fn sys_spawn_player(mut commands:Commands, player_texture:Res<PlayerSS>) {
 	};
 	
 	commands.spawn(PlayerBundle {
-		attributes: EntityBundle {
-			sprites:ssb.clone(),
+		attributes: ActorBundle {
+			texture:Texture::from(ssb.clone()),
 			bounds: Bounds::flat(0., 0., 20., 29.)
 		},
 		direction: Default::default(),
+		config: Default::default(),
 		player:Player
 	});
 	
-	commands.spawn(EntityBundle {
-		sprites:ssb.clone(),
+	commands.spawn(ActorBundle {
+		texture:Texture::from(ssb.clone()),
 		bounds: Bounds::flat(0., 0., 20., 29.)
 	});
 }

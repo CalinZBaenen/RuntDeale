@@ -1,3 +1,32 @@
+pub mod texture {
+	use bevy::sprite::{SpriteSheetBundle, SpriteBundle};
+	use bevy::ecs::component::Component;
+	
+	use std::convert::From;
+	
+	
+	
+	
+	
+	#[derive(Component, Clone)]
+	pub enum Texture {
+		Spritesheet(SpriteSheetBundle),
+		Sprite(SpriteBundle)
+	}
+	
+	impl From<SpriteSheetBundle> for Texture {
+		fn from(ss:SpriteSheetBundle) -> Self { Self::Spritesheet(ss) }
+	}
+	
+	impl From<SpriteBundle> for Texture {
+		fn from(s:SpriteBundle) -> Self { Self::Sprite(s) }
+	}
+}
+
+
+
+
+
 pub mod marker {
 	use bevy::ecs::component::Component;
 	
@@ -8,6 +37,12 @@ pub mod marker {
 	/// Marks an entity as the primary one for its genera.
 	#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
 	pub struct Primary;
+	
+	
+	
+	/// Marks an entity as a playable thing.
+	#[derive(Component, Clone, Copy)]
+	pub struct Player;
 }
 
 
@@ -15,36 +50,30 @@ pub mod marker {
 
 
 pub mod actor {
-	use crate::components::plane::{Direction, Bounds};
-	
 	use bevy::ecs::component::Component;
-	use bevy::sprite::SpriteSheetBundle;
-	use bevy::ecs::bundle::Bundle;
 	
 	
 	
 	
 	
-	#[derive(Bundle)]
-	pub struct PlayerBundle {
-		pub(crate) attributes:EntityBundle,
-		pub(crate) direction:Direction,
-		pub(crate) player:Player
-	}
-	
-	
-	
-	#[derive(Bundle)]
-	pub struct EntityBundle {
-		pub(crate) sprites:SpriteSheetBundle,
-		pub(crate) bounds:Bounds
-	}
-	
-	
-	
-	/// Marks an entity as a playable thing.
 	#[derive(Component, Clone, Copy)]
-	pub struct Player;
+	pub struct PlayerConfig {
+		pub can_sprint:bool,
+		pub upsidedown:bool,
+		pub can_move:bool,
+		pub speed:f32,
+	}
+	
+	impl Default for PlayerConfig {
+		fn default() -> Self {
+			Self {
+				can_sprint:true,
+				upsidedown:false,
+				can_move:true,
+				speed:1.
+			}
+		}
+	}
 }
 
 
