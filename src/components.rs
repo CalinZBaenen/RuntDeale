@@ -10,7 +10,9 @@ pub mod texture {
 	
 	#[derive(Component, Clone)]
 	pub enum Texture {
+		HasSpritesheet,
 		Spritesheet(SpriteSheetBundle),
+		HasSprite,
 		Sprite(SpriteBundle)
 	}
 	

@@ -53,6 +53,7 @@ fn main() {
 	
 	app.add_plugins((
 		plugins::gameplay::GameplayPlugin,
+		plugins::texture::TexturePlugin,
 		plugins::init::InitGamePlugin
 	));
 	
