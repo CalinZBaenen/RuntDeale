@@ -36,15 +36,13 @@ pub(crate) fn sys_unwrap_texture(
 		match texture {
 			Texture::Spritesheet(ss) => {
 				entity.insert(ss);
-				entity.insert(Texture::HasSpritesheet);
+				entity.remove::<Texture>();
 			}
 			Texture::Sprite(s) => {
 				entity.insert(s);
-				entity.insert(Texture::HasSprite);
+				entity.remove::<Texture>();
 			}
 			_ => {}
 		}
-		
-		//entity.remove::<Texture>();
 	}
 }

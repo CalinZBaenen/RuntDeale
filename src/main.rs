@@ -3,7 +3,7 @@ pub        mod resources;
 pub        mod entities;
 pub(crate) mod plugins;
 pub        mod consts;
-pub        mod params;
+pub        mod query;
 
 use bevy::ecs::schedule::{SystemSet, States};
 use bevy::app::App;
