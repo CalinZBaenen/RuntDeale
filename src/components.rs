@@ -37,13 +37,13 @@ pub mod marker {
 	
 	
 	/// Marks an entity as the primary one for its genera.
-	#[derive(Component, PartialEq, Clone, Debug, Copy, Eq)]
+	#[derive(Component, PartialEq, Default, Clone, Debug, Copy, Eq)]
 	pub struct Primary;
 	
 	
 	
 	/// Marks an entity as a playable thing.
-	#[derive(Component, Clone, Copy)]
+	#[derive(Component, Default, Clone, Copy)]
 	pub struct Player;
 }
 
@@ -58,20 +58,21 @@ pub mod actor {
 	
 	
 	
+	/// Player statistics.
 	#[derive(Component, Clone, Copy)]
-	pub struct PlayerConfig {
-		pub can_sprint:bool,
+	pub struct PlayerStats {
 		pub upsidedown:bool,
-		pub can_move:bool,
-		pub speed:f32,
+		pub stamina:u32,
+		pub level:u32,
+		pub speed:f32
 	}
 	
-	impl Default for PlayerConfig {
+	impl Default for PlayerStats {
 		fn default() -> Self {
 			Self {
-				can_sprint:true,
 				upsidedown:false,
-				can_move:true,
+				stamina:100,
+				level:0,
 				speed:1.
 			}
 		}

@@ -1,13 +1,7 @@
-use crate::components::{
-	plane::{Direction, Follow},
-	marker::Player
-};
-use crate::query::{ActorWithTextureQuery, CameraQuery};
+use crate::components::{plane::Direction, marker::Player};
+use crate::query::{PrimaryCameraQuery, PlayerQuery};
 
-use bevy::ecs::{
-	query::{Without, With},
-	system::{Query, Res}
-};
+use bevy::ecs::{system::{Query, Res}, query::Without};
 use bevy::input::{keyboard::KeyCode, Input};
 use bevy::math::Vec2;
 
@@ -18,49 +12,58 @@ use bevy::math::Vec2;
 /// Handles the controls when the player should be in a `Roaming` state,
 /// like on the map or in the battlebox.
 pub(crate) fn sys_handle_freeroaming_controls(
-	mut cameras:Query<CameraQuery, Without<Player>>,
-	mut players:Query<ActorWithTextureQuery, With<Player>>,
+	mut camera_query:Query<PrimaryCameraQuery, Without<Player>>,
+	mut player_query:Query<PlayerQuery>,
 	keys:Res<Input<KeyCode>>
 ) {
-	// Player movement.
-	let mut mvmnt = Vec2::new(0., 0.);
+	let mut movement = Vec2::new(0., 0.);
 	
 	for &key in keys.get_pressed() {
 		match key {
-			KeyCode::Right | KeyCode::D => { mvmnt.x += 1.; }
-			KeyCode::Down  | KeyCode::S => { mvmnt.y -= 1.; }
-			KeyCode::Left  | KeyCode::A => { mvmnt.x -= 1.; }
-			KeyCode::Up    | KeyCode::W => { mvmnt.y += 1.; }
+			KeyCode::Right | KeyCode::D => { movement.x += 1.; }
+			KeyCode::Down  | KeyCode::S => { movement.y -= 1.; }
+			KeyCode::Left  | KeyCode::A => { movement.x -= 1.; }
+			KeyCode::Up    | KeyCode::W => { movement.y += 1.; }
 			_ => {}
 		}
 	}
 	
-	mvmnt = mvmnt.normalize_or_zero();
-	if keys.pressed(KeyCode::ControlLeft) { mvmnt *= 2.; }
+	movement = movement.normalize_or_zero();
+	if keys.pressed(KeyCode::ControlLeft) { movement *= 2.; }
 	
 	let (mut nx, mut ny) = (0., 0.);
-	for pq in &mut players {
-		let mut attrs = pq.actor;
+	for player in &mut player_query {
+		let spatial_config = player.actor.spatial_config;
 		
-		let dir = Direction::from_strongest(mvmnt.x, mvmnt.y).unwrap_or(**attrs.direction.as_ref().unwrap());
-		(nx, ny) = attrs.bounds.shift(mvmnt.x, mvmnt.y);
+		// Get references to the components.
+		let mut direction = spatial_config.direction.unwrap();
+		let mut transform = spatial_config.transform;
+		let     dir       = Direction::from_strongest(movement.x, movement.y).unwrap_or(*direction);
 		
-		attrs.transform.translation.x = nx;
-		attrs.transform.translation.y = ny;
-		*attrs.direction.unwrap()     = dir;
+		// Shift the bounds of the player.
+		(nx, ny) = spatial_config.bounds.unwrap().shift(movement.x, movement.y);
 		
-		if let Some(mut sprite) = pq.texture.ta_sprite { sprite.index = 3*(dir as usize); }
+		// Set the transformation.
+		transform.translation.x = nx;
+		transform.translation.y = ny;
+		
+		// Change the direction 
+		*direction = dir;
+		if let Some(mut sprite) = player.actor.texture.ta_sprite { sprite.index = 3*(dir as usize); }
 	};
 	
-	for mut camera in &mut cameras {
-		if !camera.is_primary { continue; }
+	for camera in &mut camera_query {
+		let camera = camera.camera;
 		
-		let follow = camera.follow.unwrap_or(&Follow::DEFAULT);
+		// Make the camera follow the player.
+		let follow = camera.spatial_config.follow.unwrap();
 		let translation = Vec2::new(
 			if follow.horizontal() { nx } else { 0. },
 			if follow.vertical() { ny } else { 0. }
 		);
 		
-		camera.transform.translation = translation.extend(camera.transform.translation.z);
+		// Move the camera.
+		let mut transform     = camera.spatial_config.transform;
+		transform.translation = translation.extend(	transform.translation.z);
 	}
 }
