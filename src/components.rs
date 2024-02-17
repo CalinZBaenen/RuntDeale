@@ -10,9 +10,7 @@ pub mod texture {
 	
 	#[derive(Component, Clone)]
 	pub enum Texture {
-		HasSpritesheet,
 		Spritesheet(SpriteSheetBundle),
-		HasSprite,
 		Sprite(SpriteBundle)
 	}
 	
@@ -37,13 +35,13 @@ pub mod marker {
 	
 	
 	/// Marks an entity as the primary one for its genera.
-	#[derive(Component, PartialEq, Default, Clone, Debug, Copy, Eq)]
-	pub struct Primary;
+	#[derive(PartialEq, Component, Default, Clone, Debug, Copy, Eq)]
+	pub(crate) struct Primary;
 	
 	
 	
 	/// Marks an entity as a playable thing.
-	#[derive(Component, Default, Clone, Copy)]
+	#[derive(PartialEq, Component, Default, Clone, Debug, Copy, Eq)]
 	pub struct Player;
 }
 
@@ -180,14 +178,27 @@ pub mod plane {
 	}
 	
 	impl Follow {
+		/// The default value of `Follow` expressed as a constant.
 		pub const DEFAULT:Self = Self::Both;
 		
+		
+		/// Returns the coordinates that something should be at if it follows
+		/// particular axes, staying at the given coordinate if it does not
+		/// move along that axis.
+		pub fn follow_or(self, follow_to:(f32, f32), locked_at:(f32, f32)) -> (f32, f32) {
+			(
+				if self.horizontal() { follow_to.0 } else { locked_at.0 },
+				if self.vertical() { follow_to.1 } else { locked_at.1 }
+			)
+		}
+		/// Checks if this `Follow`-value allows for movement horizontally.
 		pub const fn horizontal(self) -> bool {
 			match self {
 				Self::Horizontal | Self::Both => true,
 				_ => false
 			}
 		}
+		/// Checks if this `Follow`-value allows for movement vertically.
 		pub const fn vertical(self) -> bool {
 			match self {
 				Self::Vertical | Self::Both => true,

@@ -14,12 +14,16 @@ use bevy::render::camera::Camera;
 #[world_query(mutable)]
 pub struct PrimaryCameraQuery {
 	/// Filter.
-	_filter:(With<Primary>, With<Follow>),
+	    _filter:(With<Primary>, With<Follow>),
 	/// The camera.
 	pub camera:CameraQuery
 }
 
 
+
+impl CameraQueryItem<'_> {
+	pub const fn is_primary(&self) -> bool { self.is_primary }
+}
 
 
 
@@ -60,7 +64,7 @@ pub struct CameraQuery {
 	/// The spatial configuration of the camera.
 	pub spatial_config:SpatialQuery,
 	/// Whether or not the camera is primary.
-	pub is_primary:Has<Primary>,
+	    is_primary:Has<Primary>,
 	/// The `Camera` component.
 	pub camera:&'static Camera
 }

@@ -42,7 +42,6 @@ pub(crate) fn sys_unwrap_texture(
 				entity.insert(s);
 				entity.remove::<Texture>();
 			}
-			_ => {}
 		}
 	}
 }
