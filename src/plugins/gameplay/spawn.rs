@@ -1,8 +1,8 @@
 use crate::components::{
 	plane::{Direction, Bounds},
+	marker::{Primary, Player},
 	actor::PlayerStats,
 	texture::Texture,
-	marker::Player,
 };
 use crate::entities::{PlayerBundle, ActorBundle};
 use crate::consts::config::SCALE_FACTOR;
@@ -40,7 +40,7 @@ pub fn sys_spawn_player(mut commands:Commands, player_texture:Res<PlayerSS>) {
 			bounds: Bounds::flat(0., 0., 20., 29.)
 		},
 		stats: PlayerStats::default()
-	});
+	}).insert(Primary);
 	
 	commands.spawn(ActorBundle {
 		texture: Texture::from(ssb.clone()),

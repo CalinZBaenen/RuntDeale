@@ -5,6 +5,7 @@ pub(crate) mod plugins;
 pub        mod consts;
 pub        mod query;
 
+use bevy_embedded_assets::{EmbeddedAssetPlugin, PluginMode as EmbedMode};
 use bevy::ecs::schedule::{SystemSet, States};
 use bevy::app::App;
 
@@ -52,6 +53,7 @@ fn main() {
 	let mut app = App::new();
 	
 	app.add_plugins((
+		EmbeddedAssetPlugin {mode: EmbedMode::ReplaceDefault},
 		plugins::gameplay::GameplayPlugin,
 		plugins::movement::MovementPlugin,
 		plugins::texture::TexturePlugin,

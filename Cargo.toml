@@ -2,7 +2,10 @@
 name = "runtdeale"
 
 [package]
+description = "An UNDERTALE fangame."
+authors = ["Calin Z. Baenen <calinbaenen@gmail.com>"]
 edition = "2021"
+license = "MIT"
 version = "0.1.1"
 name = "runtdeale"
 
@@ -13,4 +16,5 @@ opt-level = 2
 opt-level = 2
 
 [dependencies]
+bevy_embedded_assets = "0.9"
 bevy = "^0.12"

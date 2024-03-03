@@ -16,7 +16,7 @@ use bevy::math::{Vec3, Vec2};
 
 
 
-///
+/// Plugin used to handle movement.
 pub(crate) struct MovementPlugin;
 
 impl Plugin for MovementPlugin {
@@ -89,19 +89,21 @@ fn sys_move_camera_with_player(
 	player_query:Query<PlayerQuery, (Changed<Transform>, With<Primary>)>
 ) {
 	let camera_item = camera_query.get_single_mut().unwrap();
-	let player_item = player_query.get_single().unwrap();
+	let player_item = player_query.get_single();
 	
-	let follow = camera_item.camera.spatial_config.follow.unwrap();
-	
-	let mut camera_transform = camera_item.camera.spatial_config.transform;
-	let     player_transform = player_item.actor.spatial_config.transform;
-	
-	let translation = Vec2::from( follow.follow_or(
-		(player_transform.translation.x, player_transform.translation.y),
-		(camera_transform.translation.x, camera_transform.translation.y)
-	) );
-	
-	move_entity(&mut camera_transform, Movement::Two(translation));
+	if let Ok(player_item) = player_item {
+		let follow = camera_item.camera.spatial_config.follow.unwrap();
+		
+		let mut camera_transform = camera_item.camera.spatial_config.transform;
+		let     player_transform = player_item.actor.spatial_config.transform;
+		
+		let translation = Vec2::from( follow.follow_or(
+			(player_transform.translation.x, player_transform.translation.y),
+			(camera_transform.translation.x, camera_transform.translation.y)
+		) );
+		
+		move_entity(&mut camera_transform, Movement::Two(translation));
+	}
 }
 
 
